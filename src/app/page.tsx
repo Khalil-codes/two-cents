@@ -1,7 +1,10 @@
 import TopicCreator from "@/components/topic-creator";
+import { redis } from "@/lib/redis";
 import { Star } from "lucide-react";
 
-export default function Home() {
+export default async function Home() {
+  const requestsCount = await redis.get<string>("served-counts");
+
   return (
     <section className="relative flex flex-1 flex-col gap-16 pb-24 pt-10 md:pb-32 md:pt-24">
       <div className="absolute inset-0 top-8 hidden lg:block">
@@ -24,7 +27,7 @@ export default function Home() {
           <Star className="h-5 w-5 fill-green-500 text-green-500" />
         </div>
         <p className="text-sm text-gray-500 dark:text-gray-300">
-          Served <b>10</b> requests
+          Served <b>{Math.ceil(Number(requestsCount) / 10) * 10}</b> requests
         </p>
       </div>
     </section>

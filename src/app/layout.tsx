@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-grid-gray-50 dark:bg-grid-gray-900 antialiased`}>
+        className={`${geistSans.variable} ${geistMono.variable} bg-grid-gray-100 dark:bg-grid-gray-900 antialiased`}>
         <QueryProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <main className="container mx-auto flex min-h-screen max-w-3xl flex-col p-5">
