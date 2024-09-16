@@ -11,7 +11,7 @@ const TopicCreator = () => {
     <div className="flex flex-col gap-2">
       <div className="flex gap-2">
         <Input
-          className="min-w-64"
+          className="min-w-64 bg-gray-50 dark:bg-gray-950"
           placeholder="Enter your topic..."
           value={input}
           onBlur={(e) => setInput(e.target.value)}
