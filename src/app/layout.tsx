@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/theme-toggle";
+import QueryProvider from "@/components/query-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,14 +31,16 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-gray-50 antialiased dark:bg-gray-950`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <main className="container mx-auto flex min-h-screen max-w-3xl flex-col p-5">
-            {children}
-          </main>
-          <div className="fixed bottom-4 right-4">
-            <ModeToggle />
-          </div>
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <main className="container mx-auto flex min-h-screen max-w-3xl flex-col p-5">
+              {children}
+            </main>
+            <div className="fixed bottom-4 right-4">
+              <ModeToggle />
+            </div>
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );
