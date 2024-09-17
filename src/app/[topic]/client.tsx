@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Wordcloud } from "@visx/wordcloud";
 import { Text } from "@visx/text";
 import { scaleLog } from "@visx/scale";
@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { submitComment } from "@/actions";
 import { toast } from "sonner";
+import { io } from "socket.io-client";
 import Link from "next/link";
 import { MoveLeft } from "lucide-react";
 
@@ -18,11 +19,49 @@ type Props = {
   initialData: Array<{ text: string; value: number }>;
 };
 
+const socket = io("http://localhost:8080", { autoConnect: false });
+
 const COLORS = ["#5c82ba", "#359cea", "#4863fa"];
 
 const ClientPage = ({ initialData, topic }: Props) => {
   const ref = React.useRef<HTMLInputElement>(null);
+  const alreadyJoined = useRef<boolean>(false);
   const [words, setWords] = useState(initialData);
+
+  useEffect(() => {
+    if (!alreadyJoined.current) {
+      socket.connect();
+      socket.emit("join-room", `room:${topic}`);
+      alreadyJoined.current = true;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    socket.on("room-update", (message: string) => {
+      const incomingWords = JSON.parse(message) as Array<{
+        text: string;
+        value: number;
+      }>;
+      incomingWords.map((word) => {
+        const isAlreadyIncluded = words.some((w) => w.text === word.text);
+        if (isAlreadyIncluded) {
+          setWords((prev) =>
+            prev.map((w) =>
+              w.text === word.text
+                ? { ...word, value: w.value + word.value }
+                : w
+            )
+          );
+        } else if (words.length < 50) {
+          setWords((prev) => [...prev, word]);
+        }
+      });
+    });
+    return () => {
+      socket.off("room-update");
+    };
+  }, [words]);
 
   const { mutate, isPending } = useMutation({
     mutationFn: submitComment,
@@ -54,7 +93,13 @@ const ClientPage = ({ initialData, topic }: Props) => {
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-6 py-10">
       <div>
-        <Link href={"/"} className="text-md flex items-center gap-2">
+        <Link
+          href={"/"}
+          className="text-md flex items-center gap-2"
+          onClick={() => {
+            socket.disconnect();
+            alreadyJoined.current = false;
+          }}>
           <MoveLeft size={18} /> Go back
         </Link>
       </div>
