@@ -7,6 +7,9 @@ import { scaleLog } from "@visx/scale";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useMutation } from "@tanstack/react-query";
+import { submitComment } from "@/actions";
+import { toast } from "sonner";
 import Link from "next/link";
 import { MoveLeft } from "lucide-react";
 
@@ -20,6 +23,25 @@ const COLORS = ["#5c82ba", "#359cea", "#4863fa"];
 const ClientPage = ({ initialData, topic }: Props) => {
   const ref = React.useRef<HTMLInputElement>(null);
   const [words, setWords] = useState(initialData);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: submitComment,
+    onSuccess: () => {
+      if (ref.current) {
+        ref.current.value = "";
+      }
+      toast.success("Comment submitted");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const handleSubmit = () => {
+    if (ref.current) {
+      mutate({ topic, comment: ref.current.value });
+    }
+  };
 
   const fontScale = scaleLog({
     domain: [
@@ -76,9 +98,16 @@ const ClientPage = ({ initialData, topic }: Props) => {
             placeholder={topic}
             ref={ref}
             autoFocus
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSubmit();
+              }
+            }}
             className="bg-gray-50 dark:bg-gray-950"
           />
-          <Button>Shoot</Button>
+          <Button onClick={handleSubmit} disabled={isPending}>
+            Shoot
+          </Button>
         </div>
       </div>
     </div>

@@ -23,3 +23,33 @@ export const createTopic = async (topic: string) => {
 
   redirect("/" + _topic);
 };
+
+export const submitComment = async ({
+  topic,
+  comment,
+}: {
+  topic: string;
+  comment: string;
+}) => {
+  if (!comment) {
+    throw new Error("comment cannot be empty");
+  }
+
+  const words = wordFreq(comment);
+
+  await Promise.all(
+    words.map(async ({ text, value }) => {
+      await redis.zadd(
+        `room:${topic}`,
+        { incr: true },
+        { member: text, score: value }
+      );
+    })
+  );
+
+  await redis.incr("served-counts");
+
+  await redis.publish(`room:${topic}`, words);
+
+  return comment;
+};
