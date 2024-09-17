@@ -7,9 +7,6 @@ export default async function Home() {
 
   return (
     <section className="relative flex flex-1 flex-col gap-16 pb-24 pt-10 md:pb-32 md:pt-24">
-      <div className="absolute inset-0 top-8 hidden lg:block">
-        {/* circle */}
-      </div>
       <div className="px-6">
         <div className="relative mx-auto flex flex-col items-center text-center">
           <h1 className="w-fit text-balance text-5xl font-bold leading-snug tracking-tight text-gray-900 dark:text-gray-100">
