@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { submitComment } from "@/actions";
 import { toast } from "sonner";
-import { io } from "socket.io-client";
+import { socket } from "@/lib/socket";
 import Link from "next/link";
 import { MoveLeft } from "lucide-react";
 
@@ -18,8 +18,6 @@ type Props = {
   topic: string;
   initialData: Array<{ text: string; value: number }>;
 };
-
-const socket = io("http://localhost:8080", { autoConnect: false });
 
 const COLORS = ["#5c82ba", "#359cea", "#4863fa"];
 
