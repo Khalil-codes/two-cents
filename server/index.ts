@@ -22,7 +22,7 @@ const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: ["*"],
+    origin: ["http://localhost:3000", "https://two-cents-2566.onrender.com"],
     methods: ["GET", "POST"],
     credentials: true,
   },
