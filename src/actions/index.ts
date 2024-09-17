@@ -1,7 +1,7 @@
 "use server";
 
 import { redis } from "@/lib/redis";
-import { slugify } from "@/lib/utils";
+import { slugify, wordFreq } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
 export const createTopic = async (topic: string) => {
@@ -17,11 +17,9 @@ export const createTopic = async (topic: string) => {
 
   const _topic = slugify(topic);
 
-  if (await redis.sismember("topics", _topic)) {
-    throw new Error("Topic already exists");
+  if (!(await redis.sismember("topics", _topic))) {
+    await redis.sadd("topics", _topic);
   }
-
-  await redis.sadd("topics", _topic);
 
   redirect("/" + _topic);
 };
