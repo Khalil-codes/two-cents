@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# **Two Cents**
 
-## Getting Started
+Two-Cents enables real-time discussions on topics, letting users share opinions instantly. Built with Socket.IO, Next.js, and Upstash/Redis.
 
-First, run the development server:
+![Two Cents](./images/topic.png)
+
+## **Features**
+
+- Simple and intuitive interface for users to describe their opinions in realtime
+- Built using Next.js and Socket IO for fast, efficient and realtime rendering
+- Used Redis to provide low latency and high scalability for real-time applications
+
+## **Getting Started**
+
+### Development Server
+
+To run the application you would need to run the client and server
+
+#### To start the client, navigate to the client directory and run:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### To start the server, navigate to the server directory and run:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev
+```
 
-## Learn More
+Use [http://localhost:8080](http://localhost:8080) as the server.
 
-To learn more about Next.js, take a look at the following resources:
+## **Contributing**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Contributions are welcome! Please refer to the [Next.js contributing guidelines](https://nextjs.org/docs/contributing) for more information.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## **License**
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).

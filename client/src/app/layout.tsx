@@ -18,9 +18,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Two Cents | Describe your opinion in just two words",
+  title: "Two Cents | Describe your opinion in real-time",
   description:
-    "Two Cents is a simple, free, open-source, and community-driven opinion analyzer.",
+    "Two-Cents enables real-time discussions on topics, letting users share opinions instantly",
 };
 
 export default function RootLayout({
