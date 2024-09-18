@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { Wordcloud } from "@visx/wordcloud";
-import { Text } from "@visx/text";
-import { scaleLog } from "@visx/scale";
+import WordCloud from "@/components/word-cloud";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -18,8 +16,6 @@ type Props = {
   topic: string;
   initialData: Array<{ text: string; value: number }>;
 };
-
-const COLORS = ["#5c82ba", "#359cea", "#4863fa"];
 
 const ClientPage = ({ initialData, topic }: Props) => {
   const ref = React.useRef<HTMLInputElement>(null);
@@ -80,16 +76,8 @@ const ClientPage = ({ initialData, topic }: Props) => {
     }
   };
 
-  const fontScale = scaleLog({
-    domain: [
-      Math.min(...words.map((w) => w.value)),
-      Math.max(...words.map((w) => w.value)),
-    ],
-    range: [24, 72],
-  });
-
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-6 py-10">
+    <div className="flex flex-1 flex-col items-center justify-center gap-6 py-4">
       <div>
         <Link
           href={"/"}
@@ -108,31 +96,8 @@ const ClientPage = ({ initialData, topic }: Props) => {
       <p className="text-sm text-gray-800 dark:text-gray-400">
         (updated in real time)
       </p>
-      <div className="flex aspect-square max-w-xl flex-1 items-center justify-center">
-        <Wordcloud
-          words={words}
-          height={600}
-          width={500}
-          font="Impact"
-          padding={2}
-          rotate={0}
-          spiral="archimedean"
-          random={() => 0.5}
-          fontSize={(w) => fontScale(w.value)}>
-          {(cloudWords) =>
-            cloudWords.map((w, i) => (
-              <Text
-                key={w.text}
-                fill={COLORS[i % COLORS.length]}
-                textAnchor={"middle"}
-                transform={`translate(${w.x}, ${w.y}) rotate(${w.rotate})`}
-                fontSize={w.size}
-                fontFamily={w.font}>
-                {w.text}
-              </Text>
-            ))
-          }
-        </Wordcloud>
+      <div className="flex max-w-xl flex-1 items-center justify-center md:aspect-square">
+        <WordCloud words={words} />
       </div>
       <div className="w-full max-w-xl">
         <Label>Here&apos;s what I think about this topic</Label>
