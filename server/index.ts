@@ -20,9 +20,17 @@ const subRedis = new Redis(CONNECTION_STRING);
 
 const server = createServer(app);
 
+app.get("/", (req, res) => {
+  res.json({ message: "Hello World!" });
+});
+
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "https://two-cents-2566.onrender.com"],
+    origin: [
+      "http://localhost:3000",
+      /^https?:\/\/([a-zA-Z0-9-]+\.)?onrender\.com$/,
+      /^https?:\/\/([a-zA-Z0-9-]+\.)?netlify\.app$/,
+    ],
     methods: ["GET", "POST"],
     credentials: true,
   },
