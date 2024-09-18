@@ -8,6 +8,11 @@ type Props = {
   };
 };
 
+export async function generateMetadata({ params }: Props) {
+  const { topic } = params;
+  return { title: `${topic} | Two Cents` };
+}
+
 const TopicPage = async ({ params }: Props) => {
   const { topic } = params;
 

@@ -6,11 +6,13 @@ export default async function Home() {
   const requestsCount = await redis.get<string>("served-counts");
 
   return (
-    <section className="relative flex flex-1 flex-col gap-16 pb-24 pt-10 md:pb-32 md:pt-24">
-      <div className="px-6">
+    <section className="relative flex flex-1 flex-col items-center justify-center gap-12 p-6">
+      <div>
         <div className="relative mx-auto flex flex-col items-center text-center">
           <h1 className="w-fit text-balance text-5xl font-bold leading-snug tracking-tight text-gray-900 dark:text-gray-100">
-            Share Your Two Cents. Spark the Conversation.
+            Share Your <span className="text-blue-500">Two Cents.</span>
+            <br /> Spark the{" "}
+            <span className="text-blue-500">Conversation.</span>
           </h1>
         </div>
       </div>
