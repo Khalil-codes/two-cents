@@ -23,22 +23,29 @@ const TopicCreator = () => {
     },
   });
 
+  const handleSubmit = () => {
+    if (ref.current) {
+      mutate(ref.current.value);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-2">
         <Input
-          className="min-w-64 bg-gray-50 dark:bg-gray-950"
+          className="min-w-72 bg-gray-50 dark:bg-gray-950"
           placeholder="Enter your topic..."
           ref={ref}
-        />
-        <Button
-          variant="default"
           disabled={isPending}
-          onClick={() => {
-            if (ref.current) {
-              mutate(ref.current.value);
+          autoFocus
+          required
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSubmit();
             }
-          }}>
+          }}
+        />
+        <Button variant="default" disabled={isPending} onClick={handleSubmit}>
           Create
         </Button>
       </div>
