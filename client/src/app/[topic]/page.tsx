@@ -18,6 +18,8 @@ const TopicPage = async ({ params }: Props) => {
 
   const words = await getTopic(topic);
 
+  await fetch(process.env.NEXT_PUBLIC_SERVER_URL!);
+
   return <ClientPage topic={topic} initialData={words} />;
 };
 
