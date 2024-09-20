@@ -21,7 +21,7 @@ const subRedis = new Redis(CONNECTION_STRING);
 const server = createServer(app);
 
 app.get("/", (req, res) => {
-  res.json({ message: "Hello World!" });
+  res.send("OK");
 });
 
 const io = new Server(server, {
