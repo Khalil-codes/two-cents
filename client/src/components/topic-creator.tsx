@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { createTopic } from "@/actions";
 import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
 const TopicCreator = () => {
   const ref = React.useRef<HTMLInputElement>(null);
@@ -45,8 +46,12 @@ const TopicCreator = () => {
             }
           }}
         />
-        <Button variant="default" disabled={isPending} onClick={handleSubmit}>
-          Create
+        <Button
+          variant="default"
+          className="min-w-20"
+          disabled={isPending}
+          onClick={handleSubmit}>
+          {isPending ? <Loader className="animate-spin" size={18} /> : "Create"}
         </Button>
       </div>
     </div>
